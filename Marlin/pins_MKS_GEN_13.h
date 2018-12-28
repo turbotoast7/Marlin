@@ -1,3 +1,4 @@
+#include "pins_RAMPS.h"
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -39,7 +40,17 @@
 // Heaters / Fans
 //
 // Power outputs EFBF or EFBE
+#define HEATER_1_PIN -1
 #define MOSFET_D_PIN 7
+
+#define CASE_LIGHT_ENABLE
+#if ENABLED(CASE_LIGHT_ENABLE)
+  #define CASE_LIGHT_PIN MOSFET_D_PIN         // Override the default pin if needed
+  #define INVERT_CASE_LIGHT false             // Set true if Case Light is ON when pin is LOW
+  #define CASE_LIGHT_DEFAULT_ON true         // Set default power-up state on
+  #define CASE_LIGHT_DEFAULT_BRIGHTNESS 127   // Set default power-up brightness (0-255, requires PWM pin)
+  #define MENU_ITEM_CASE_LIGHT                // Add a Case Light option to the LCD main menu
+#endif
 
 //
 // PSU / SERVO
@@ -51,7 +62,16 @@
   #define PS_ON_PIN        4
 #endif
 
-#include "pins_RAMPS.h"
+
+// Define Filament Runout Pin
+#undef FIL_RUNOUT_PIN
+#define FIL_RUNOUT_PIN 4
+
+// SWITCH PINS TO REVERSE DIRECTION OF ENCODER KNOB
+#undef BTN_EN1
+#undef BTN_EN2
+#define BTN_EN1 33
+#define BTN_EN2 31
 
 //
 // LCD / Controller
@@ -95,6 +115,8 @@
   #undef SD_DETECT_PIN
   #undef BEEPER_PIN
   #undef KILL_PIN
+
+  
 
   //
   // VIKI2 12-wire lead
